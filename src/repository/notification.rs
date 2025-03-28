@@ -6,7 +6,7 @@ use std::sync::RwLock;
  
  // Singleton of Database
  lazy_static! {
-     static ref NOTIFICATION: RwLock<Vec<Notification>> = RwLock::new(vec![]);
+     static ref NOTIFICATIONS: RwLock<Vec<Notification>> = RwLock::new(vec![]);
  }
  
  pub struct NotificationRepository;
@@ -16,5 +16,10 @@ use std::sync::RwLock;
         NOTIFICATIONS.write().unwrap()
             .push(notification.clone());
         return notification
+    }
+
+    pub fn list_all_as_string() -> Vec<String> {
+        return NOTIFICATIONS.read().unwrap()
+            .iter().map(|f| format!("{}", f.clone())).collect();
     }
  }
